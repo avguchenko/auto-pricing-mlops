@@ -29,6 +29,10 @@ def main(args):
     # Reading Data
     df = pd.read_csv(args.raw_data)
 
+    # Log raw dataset size for traceability across pipeline runs
+    print(f"Loaded raw data with shape: {df.shape}")
+    mlflow.log_metric("raw_rows", df.shape[0])
+
     # Step 1: label-encode the categorical Segment column
     le = LabelEncoder()
     df["Segment"] = le.fit_transform(df["Segment"])
